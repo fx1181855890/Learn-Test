@@ -6,7 +6,7 @@ from user import User
 
 
 class Bilibili:
-    def __init__(self, webdriver):
+    def __init__(self, webdriver: WebDriver):
         self.driver = webdriver
         self.wait = WebDriverWait(self.driver, timeout=4)
         self.search_input_path = "//input[@class='nav-search-input']"
@@ -19,11 +19,23 @@ class Bilibili:
         search_button = self.wait.until(presence_of_element_located((By.XPATH, self.search_button_path)))
         search_button.click()
 
-    def get_card(self):
+    def process_card(self):
         card_divs = self.wait.until(presence_of_all_elements_located((By.XPATH, self.card_div_path)))
         users = []
         for card_div in card_divs:
             user = User()
             users.append(user)
-            user.name = card_div.find_element(By.XPATH, ".//h3[@class='bili-video-card__info--tit']")
-            print(user.name.text)
+            try:
+                user.name = card_div.find_element(By.XPATH, ".//h3[@class='bili-video-card__info--tit']").text
+                user.up = card_div.find_element(By.XPATH, ".//span[@class='bili-video-card__info--author']").text
+                user.pubdate = card_div.find_element(By.XPATH, ".//span[@class='bili-video-card__info--date']").text
+                card_div.click()
+                self.driver.switch_to.window(self.driver.window_handles[2])
+                self.driver.close()
+                self.driver.switch_to.window(self.driver.window_handles[1])
+            except Exception as e:
+                print(e)
+                break
+
+        for user in users:
+            print(user.name, user.up, user.pubdate)
