@@ -9,7 +9,7 @@ try:
     bilibili = Bilibili(driver)
     bilibili.search()
     driver.switch_to.window(driver.window_handles[1])
-    bilibili.process_card()
+    bilibili.process_cards()
 except Exception as e:
     print(e)
 finally:
