@@ -26,7 +26,7 @@ class Bilibili:
         self.driver.close()
         self.driver.switch_to.window(self.driver.window_handles[0])
 
-    def process_cards(self, target_card_count=20):
+    def process_cards(self, target_card_count=25):
         users = []
         last_count = 0
 
@@ -44,14 +44,14 @@ class Bilibili:
             card_divs = self.driver.find_elements(By.XPATH, self.card_div_path)
             last_count = len(card_divs)
 
-            for index, card_div in enumerate(card_divs[len(users):target_card_count], start=len(users) + 1):
-                try:
+            try:
+                for index, card_div in enumerate(card_divs[len(users):target_card_count], start=len(users) + 1):
                     print(f"Processing card [{index}/{target_card_count}]")
                     user = self.process_card(card_div)
                     users.append(user)
-                except Exception as e:
-                    print(f"Exception: {e}")
-                    break
+            except Exception as e:
+                print(f"Exception: {e}")
+                break
 
         save_users_to_csv(users, "users.csv")
 
@@ -69,7 +69,7 @@ class Bilibili:
                 user.course_desc = ""
         except Exception as e:
             raise e
-        finally:
-            self.driver.close()
-            self.driver.switch_to.window(self.driver.window_handles[0])
-            return user
+
+        self.driver.close()
+        self.driver.switch_to.window(self.driver.window_handles[0])
+        return user
