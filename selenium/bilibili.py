@@ -17,6 +17,7 @@ class Bilibili:
         self.author_span_path = ".//span[@class='bili-video-card__info--author']"
         self.date_div_path = ".//div[@class='pubdate']"
         self.description_span_path = "//span[@class='desc-info-text']"
+        self.close_div_path = "//div[@class='close']"
 
     def search(self):
         search_input = self.wait.until(presence_of_element_located((By.XPATH, self.search_input_path)))
@@ -32,6 +33,7 @@ class Bilibili:
 
         while len(users) < target_card_count:
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+            self.wait.until(presence_of_element_located((By.XPATH, self.close_div_path))).click()
 
             try:
                 self.wait.until(
