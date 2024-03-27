@@ -11,9 +11,16 @@ def save_users_to_csv(users, file_path):
 
         for user in users:
             row = [
-                user.name, user.up, user.course_desc, user.pubdate,
-                user.url, user.card_url, user.course_like, user.course_fav,
-                user.course_view, user.tag
+                user.name,
+                user.up,
+                user.course_desc,
+                user.pubdate,
+                user.url,
+                user.card_url,
+                user.course_like,
+                user.course_fav,
+                user.course_view,
+                user.tag
             ]
             writer.writerow(row)
 
