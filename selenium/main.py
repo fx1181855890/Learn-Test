@@ -5,9 +5,8 @@ from bilibili import Bilibili
 driver = webdriver.Chrome()
 
 try:
-    driver.get("https://www.bilibili.com")
     bilibili = Bilibili(driver)
-    bilibili.search()
+    bilibili.driver.get(bilibili.url)
     bilibili.process_cards()
 except Exception as e:
     print(e)

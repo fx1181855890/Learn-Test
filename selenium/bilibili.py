@@ -12,6 +12,7 @@ class Bilibili:
         self.wait = WebDriverWait(self.driver, timeout=4)
         self.wait_find = lambda path: self.wait.until(presence_of_element_located((By.XPATH, path)))
         self.wait_find_all = lambda path: self.wait.until(presence_of_all_elements_located((By.XPATH, path)))
+        self.url = "https://search.bilibili.com/all?keyword=%E5%89%8D%E7%AB%AF&order=click"
         self.search_input_path = "//input[@class='nav-search-input']"
         self.search_button_path = "//div[@class='nav-search-btn']"
         self.max_played_button_path = "//button[text()='最多播放']"
@@ -21,14 +22,6 @@ class Bilibili:
         self.author_span_path = ".//span[@class='bili-video-card__info--author']"
         self.date_div_path = "//div[@class='pubdate']"
         self.description_span_path = "//span[@class='desc-info-text']"
-
-    def search(self):
-        search_input = self.wait_find(self.search_input_path)
-        search_input.send_keys("前端")
-        search_button = self.wait_find(self.search_button_path)
-        search_button.click()
-        self.driver.close()
-        self.driver.switch_to.window(self.driver.window_handles[0])
 
     def process_cards(self, target_card_count=24):
         users = []
