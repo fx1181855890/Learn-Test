@@ -1,23 +1,18 @@
 import traceback
-from urllib.parse import urlparse, urlunparse
 
 from selenium.common import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.expected_conditions import *
 from selenium.webdriver.support.wait import WebDriverWait
 
+from scraper import Scraper, get_base_url
 from user import *
 
 
-def get_base_url(full_url):
-    parsed_url = urlparse(full_url)
-    base_url = urlunparse((parsed_url.scheme, parsed_url.netloc, parsed_url.path, '', '', ''))
-    return base_url
-
-
-class Bilibili:
+class Bilibili(Scraper):
     def __init__(self, webdriver: WebDriver):
-        self.driver = webdriver
+        super().__init__(webdriver)
+
         self.url = "https://search.bilibili.com/all?keyword=%E5%89%8D%E7%AB%AF&order=click"
 
         self.search_input_path = "//input[@class='nav-search-input']"
