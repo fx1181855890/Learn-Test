@@ -28,7 +28,7 @@ class Bilibili:
         self.close_div_path = "//div[@class='close']"
         self.title_h3_path = ".//h3[@class='bili-video-card__info--tit']"
         self.author_span_path = ".//span[@class='bili-video-card__info--author']"
-        self.cover_picture_path = ".//picture[@class='v-img bili-video-card__cover']"
+        self.cover_img_path = ".//picture[@class='v-img bili-video-card__cover']/img"
 
         self.date_div_path = "//div[@class='pubdate-ip-text']"
         self.description_span_path = "//span[@class='desc-info-text']"
@@ -96,8 +96,8 @@ class Bilibili:
     def process_card(self, card_div: WebElement) -> User:
         user = User()
         user.name = self.__wait_find(self.title_h3_path, element=card_div).text
-        user.up = card_div.find_element(By.XPATH, self.author_span_path).text
-        user.card_url = card_div.find_element(By.XPATH, f"{self.cover_picture_path}/img").get_attribute("src")
+        user.up = self.__wait_find(self.author_span_path, element=card_div).text
+        user.card_url = self.__wait_find(self.cover_img_path, element=card_div).get_attribute("src")
 
         try:
             card_div.click()
