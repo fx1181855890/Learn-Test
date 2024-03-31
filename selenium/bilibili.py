@@ -1,4 +1,5 @@
-import time
+import traceback
+from urllib.parse import urlparse, urlunparse
 
 from selenium.common import TimeoutException
 from selenium.webdriver.common.by import By
@@ -6,6 +7,12 @@ from selenium.webdriver.support.expected_conditions import *
 from selenium.webdriver.support.wait import WebDriverWait
 
 from user import *
+
+
+def get_base_url(full_url):
+    parsed_url = urlparse(full_url)
+    base_url = urlunparse((parsed_url.scheme, parsed_url.netloc, parsed_url.path, '', '', ''))
+    return base_url
 
 
 class Bilibili:
@@ -19,7 +26,7 @@ class Bilibili:
         self.close_div_path = "//div[@class='close']"
         self.title_h3_path = ".//h3[@class='bili-video-card__info--tit']"
         self.author_span_path = ".//span[@class='bili-video-card__info--author']"
-        self.date_div_path = "//div[@class='pubdate']"
+        self.date_div_path = "//div[@class='pubdate-ip-text']"
         self.description_span_path = "//span[@class='desc-info-text']"
 
     def __wait(self, element: WebDriver | WebElement = None) -> WebDriverWait:
@@ -85,15 +92,16 @@ class Bilibili:
         try:
             card_div.click()
             self.driver.switch_to.window(self.driver.window_handles[1])
-            user.url = self.driver.current_url
+            user.url = get_base_url(self.driver.current_url)
             user.pubdate = self.__wait_find(self.date_div_path).text
             try:
                 user.course_desc = self.__wait_find(self.description_span_path).text
             except Exception:
                 user.course_desc = ""
         except Exception as e:
+            traceback.print_exc()
             raise e
-
-        self.driver.close()
-        self.driver.switch_to.window(self.driver.window_handles[0])
-        return user
+        finally:
+            self.driver.close()
+            self.driver.switch_to.window(self.driver.window_handles[0])
+            return user
