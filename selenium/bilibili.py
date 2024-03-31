@@ -42,12 +42,12 @@ class Bilibili:
             element = self.driver
         return WebDriverWait(element, timeout=4)
 
-    def __wait_find(self, path: str, element: WebDriver | WebElement = None, all=False) -> WebElement | list[WebElement]:
+    def __wait_find(self, path: str, element: WebDriver | WebElement = None, find_all=False) -> WebElement | list[WebElement]:
         if element is None:
             element = self.driver
-        if all is False:
+        if find_all is False:
             return self.__wait(element).until(presence_of_element_located((By.XPATH, path)))
-        if all is True:
+        if find_all is True:
             return self.__wait(element).until(presence_of_all_elements_located((By.XPATH, path)))
 
     def search(self):
@@ -78,13 +78,13 @@ class Bilibili:
                 print("Timed out waiting for more cards to load.")
                 break
 
-            card_divs = self.__wait_find(self.card_div_path, all=True)
+            card_divs = self.__wait_find(self.card_div_path, find_all=True)
             last_count = len(card_divs)
 
             try:
                 for index, card_div in enumerate(card_divs[len(users):target_card_count], start=len(users) + 1):
                     print(f"Processing card [{index}/{target_card_count}]")
-                    card_div = self.__wait_find(self.card_div_path, all=True)[index]
+                    card_div = self.__wait_find(self.card_div_path, find_all=True)[index]
                     user = self.process_card(card_div)
                     users.append(user)
             except Exception as e:
@@ -107,7 +107,7 @@ class Bilibili:
             user.course_like = self.__wait_find(self.like_span_path).text
             user.course_fav = self.__wait_find(self.fav_span_path).text
             user.course_view = self.__wait_find(self.view_div_path).text
-            tags = self.__wait_find(self.tag_div_path, all=True)
+            tags = self.__wait_find(self.tag_div_path, find_all=True)
             user.tag = [tag.text for tag in tags]
             try:
                 user.course_desc = self.__wait_find(self.description_span_path).text
