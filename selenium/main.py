@@ -9,6 +9,6 @@ try:
     bilibili.driver.get(bilibili.url)
     bilibili.process_cards()
 except Exception as e:
-    print(e)
+    raise e
 finally:
     driver.quit()
