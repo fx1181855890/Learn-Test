@@ -1,7 +1,5 @@
 import traceback
 
-from selenium.common import TimeoutException
-from selenium.webdriver.common.by import By
 from selenium.webdriver.support.expected_conditions import *
 
 from scraper import Scraper, get_base_url
@@ -39,38 +37,24 @@ class Bilibili(Scraper):
         self.driver.close()
         self.driver.switch_to.window(self.driver.window_handles[0])
 
-    def process_cards(self, target_card_count=4):
+    def process_cards(self, target_card_count=24):
         users = []
-        last_count = 0
 
         self._wait_find(self.max_played_button_path).click()
         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         self._wait_find(self.close_div_path).click()
-        self.driver.execute_script("window.scrollTo(0, 0);")
 
-        while len(users) < target_card_count:
-            self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+        card_divs = self._wait_find(self.card_div_path, find_all=True)
 
-            try:
-                self._wait().until(
-                    lambda d: len(d.find_elements(By.XPATH, self.card_div_path)) > last_count
-                )
-            except TimeoutException:
-                print("Timed out waiting for more cards to load.")
-                break
-
-            card_divs = self._wait_find(self.card_div_path, find_all=True)
-            last_count = len(card_divs)
-
-            try:
-                for index, card_div in enumerate(card_divs[len(users):target_card_count], start=len(users) + 1):
-                    print(f"Processing card [{index}/{target_card_count}]")
-                    card_div = self._wait_find(self.card_div_path, find_all=True)[index]
-                    user = self.process_card(card_div)
-                    users.append(user)
-            except Exception as e:
-                save_users_to_csv(users, "users.csv")
-                raise e
+        try:
+            for index, card_div in enumerate(card_divs[len(users):target_card_count], start=len(users) + 1):
+                print(f"Processing card [{index}/{target_card_count}]")
+                card_div = self._wait_find(self.card_div_path, find_all=True)[index]
+                user = self.process_card(card_div)
+                users.append(user)
+        except Exception as e:
+            save_users_to_csv(users, "users.csv")
+            raise e
 
         save_users_to_csv(users, "users.csv")
 
