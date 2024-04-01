@@ -57,14 +57,17 @@ class Bilibili(Scraper):
                 target_page_card_count = min(remain_card_count, 24)
                 users = self.process_page(users, target_page_card_count)
                 remain_card_count -= target_page_card_count
+
+                reference_element = self._wait_find(self.card_div_path)
                 self._wait_find(self.next_button_path).click()
+                self._wait_for_staleness(reference_element)
         except Exception as e:
             save_users_to_csv(users, "users.csv")
             raise e
 
         save_users_to_csv(users, "users.csv")
 
-    def process_page(self, users, target_page_card_count):
+    def process_page(self, users, target_page_card_count) -> list[User]:
         card_divs = self._wait_find(self.card_div_path, find_all=True)
         for card_div in card_divs[0:target_page_card_count]:
             self.current_card_index += 1

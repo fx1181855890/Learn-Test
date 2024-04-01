@@ -29,3 +29,6 @@ class Scraper:
             return self._wait(element).until(presence_of_element_located((By.XPATH, path)))
         if find_all is True:
             return self._wait(element).until(presence_of_all_elements_located((By.XPATH, path)))
+
+    def _wait_for_staleness(self, element, timeout=1):
+        WebDriverWait(self.driver, timeout).until(staleness_of(element))
