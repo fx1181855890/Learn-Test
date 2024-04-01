@@ -20,7 +20,7 @@ class Scraper:
     def _wait(self, element: WebDriver | WebElement = None) -> WebDriverWait:
         if element is None:
             element = self.driver
-        return WebDriverWait(element, timeout=4)
+        return WebDriverWait(element, timeout=1)
 
     def _wait_find(self, path: str, element: WebDriver | WebElement = None, find_all=False) -> WebElement | list[WebElement]:
         if element is None:

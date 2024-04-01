@@ -10,6 +10,9 @@ class Bilibili(Scraper):
     def __init__(self, webdriver: WebDriver):
         super().__init__(webdriver)
 
+        self.current_card_index = 0
+        self.target_total_card_count = 50
+
         self.url = "https://search.bilibili.com/all?keyword=%E5%89%8D%E7%AB%AF&order=click"
 
         self.search_input_path = "//input[@class='nav-search-input']"
@@ -18,6 +21,8 @@ class Bilibili(Scraper):
 
         self.card_div_path = "//div[@class='bili-video-card']"
         self.close_div_path = "//div[@class='close']"
+        self.next_button_path = "//button[text()='下一页']"
+
         self.title_h3_path = ".//h3[@class='bili-video-card__info--tit']"
         self.author_span_path = ".//span[@class='bili-video-card__info--author']"
         self.cover_img_path = ".//picture[@class='v-img bili-video-card__cover']/img"
@@ -37,26 +42,36 @@ class Bilibili(Scraper):
         self.driver.close()
         self.driver.switch_to.window(self.driver.window_handles[0])
 
-    def process_cards(self, target_card_count=24):
+    def process_cards(self, target_total_card_count=50):
+        self.target_total_card_count = target_total_card_count
+
         users = []
 
         self._wait_find(self.max_played_button_path).click()
         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
         self._wait_find(self.close_div_path).click()
 
-        card_divs = self._wait_find(self.card_div_path, find_all=True)
-
         try:
-            for index, card_div in enumerate(card_divs[len(users):target_card_count], start=len(users) + 1):
-                print(f"Processing card [{index}/{target_card_count}]")
-                card_div = self._wait_find(self.card_div_path, find_all=True)[index]
-                user = self.process_card(card_div)
-                users.append(user)
+            remain_card_count = target_total_card_count
+            while remain_card_count > 0:
+                target_page_card_count = min(remain_card_count, 24)
+                users = self.process_page(users, target_page_card_count)
+                remain_card_count -= target_page_card_count
+                self._wait_find(self.next_button_path).click()
         except Exception as e:
             save_users_to_csv(users, "users.csv")
             raise e
 
         save_users_to_csv(users, "users.csv")
+
+    def process_page(self, users, target_page_card_count):
+        card_divs = self._wait_find(self.card_div_path, find_all=True)
+        for card_div in card_divs[0:target_page_card_count]:
+            self.current_card_index += 1
+            print(f"Processing card [{self.current_card_index}/{self.target_total_card_count}] ...")
+            user = self.process_card(card_div)
+            users.append(user)
+        return users
 
     def process_card(self, card_div: WebElement) -> User:
         user = User()
@@ -66,7 +81,7 @@ class Bilibili(Scraper):
 
         try:
             card_div.click()
-            self.driver.switch_to.window(self.driver.window_handles[1])
+            self.driver.switch_to.window(self.driver.window_handles[-1])
             user.url = get_base_url(self.driver.current_url)
             user.pubdate = self._wait_find(self.date_div_path).text
             user.course_like = self._wait_find(self.like_span_path).text
