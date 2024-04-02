@@ -22,5 +22,5 @@ def download_images_from_csv(csv_file_path, image_column, folder_name):
                 download_image(image_url, folder_name)
 
 
-download_images_from_csv('../data/users.csv', 'card_url', 'data/cover_img')
-download_images_from_csv('../data/ups.csv', 'avatar_url', 'data/avatar_img')
+download_images_from_csv('../data/users.csv', 'card_url', '../data/cover_img')
+download_images_from_csv('../data/ups.csv', 'avatar_url', '../data/avatar_img')

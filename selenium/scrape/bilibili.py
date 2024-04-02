@@ -101,7 +101,7 @@ class Bilibili(Scraper):
             tags = self._wait_find(self.tag_div_path, find_all=True)
             user.tag = [tag.text for tag in tags]
             try:
-                user.course_desc = self._wait_find(self.description_span_path).text
+                user.course_desc = self._wait_find(self.description_span_path, timeout=1).text
             except Exception:
                 user.course_desc = ""
         except Exception as e:

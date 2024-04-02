@@ -22,7 +22,7 @@ class Scraper:
     def _wait(
             self,
             element: WebDriver | WebElement = None,
-            timeout: float = 2
+            timeout: float = 4
     ) -> WebDriverWait:
         if element is None:
             element = self.driver
@@ -33,7 +33,7 @@ class Scraper:
             path: str,
             element: WebDriver | WebElement = None,
             find_all: bool = False,
-            timeout: float = 2
+            timeout: float = 4
     ) -> WebElement | list[WebElement]:
         if element is None:
             element = self.driver
@@ -45,7 +45,7 @@ class Scraper:
     def _wait_for_staleness(
             self,
             element: WebDriver | WebElement = None,
-            timeout: float = 2
+            timeout: float = 4
     ):
         if element is None:
             element = self.driver
