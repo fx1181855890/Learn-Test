@@ -32,14 +32,15 @@ class Scraper:
             self,
             path: str,
             element: WebDriver | WebElement = None,
-            find_all: bool = False
+            find_all: bool = False,
+            timeout: float = 2
     ) -> WebElement | list[WebElement]:
         if element is None:
             element = self.driver
         if find_all is False:
-            return self._wait(element).until(presence_of_element_located((By.XPATH, path)))
+            return self._wait(element, timeout=timeout).until(presence_of_element_located((By.XPATH, path)))
         if find_all is True:
-            return self._wait(element).until(presence_of_all_elements_located((By.XPATH, path)))
+            return self._wait(element, timeout=timeout).until(presence_of_all_elements_located((By.XPATH, path)))
 
     def _wait_for_staleness(
             self,
