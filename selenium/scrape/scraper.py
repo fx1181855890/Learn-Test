@@ -20,7 +20,7 @@ class Scraper:
     def _wait(self, element: WebDriver | WebElement = None) -> WebDriverWait:
         if element is None:
             element = self.driver
-        return WebDriverWait(element, timeout=2)
+        return WebDriverWait(element, timeout=4)
 
     def _wait_find(self, path: str, element: WebDriver | WebElement = None, find_all=False) -> WebElement | list[WebElement]:
         if element is None:
@@ -30,5 +30,5 @@ class Scraper:
         if find_all is True:
             return self._wait(element).until(presence_of_all_elements_located((By.XPATH, path)))
 
-    def _wait_for_staleness(self, element, timeout=1):
+    def _wait_for_staleness(self, element, timeout=4):
         WebDriverWait(self.driver, timeout).until(staleness_of(element))
