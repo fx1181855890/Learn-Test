@@ -5,10 +5,8 @@ from scraper import Scraper
 
 
 class Baidu(Scraper):
-    def __init__(self, webdriver: WebDriver):
-        super().__init__(webdriver)
-
-        self.url = "https://www.baidu.com"
+    def __init__(self):
+        super().__init__("https://www.baidu.com")
 
         self.search_input_path = "//input[@name='wd']"
 
