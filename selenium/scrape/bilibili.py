@@ -8,13 +8,11 @@ from model.user import *
 
 
 class Bilibili(Scraper):
-    def __init__(self, webdriver: WebDriver):
-        super().__init__(webdriver)
+    def __init__(self):
+        super().__init__("https://search.bilibili.com/all?keyword=%E5%89%8D%E7%AB%AF&order=click")
 
         self.current_card_index = 0
         self.target_total_card_count = 0
-
-        self.url = "https://search.bilibili.com/all?keyword=%E5%89%8D%E7%AB%AF&order=click"
 
         self.search_input_path = "//input[@class='nav-search-input']"
         self.search_button_path = "//div[@class='nav-search-btn']"
