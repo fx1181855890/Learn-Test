@@ -2,9 +2,9 @@ import traceback
 
 from selenium.webdriver.support.expected_conditions import *
 
-from scraper import Scraper, get_base_url
-from up import *
-from user import *
+from scrape.scraper import Scraper, get_base_url
+from model.up import *
+from model.user import *
 
 
 class Bilibili(Scraper):
@@ -12,7 +12,7 @@ class Bilibili(Scraper):
         super().__init__(webdriver)
 
         self.current_card_index = 0
-        self.target_total_card_count = 50
+        self.target_total_card_count = 0
 
         self.url = "https://search.bilibili.com/all?keyword=%E5%89%8D%E7%AB%AF&order=click"
 
@@ -47,7 +47,7 @@ class Bilibili(Scraper):
         self.driver.close()
         self.driver.switch_to.window(self.driver.window_handles[0])
 
-    def process_cards(self, target_total_card_count=50):
+    def process_cards(self, target_total_card_count=100):
         self.target_total_card_count = target_total_card_count
 
         users = []
@@ -68,12 +68,12 @@ class Bilibili(Scraper):
                 self._wait_find(self.next_button_path).click()
                 self._wait_for_staleness(reference_element)
         except Exception as e:
-            save_users_to_csv(users, "data/users.csv")
-            save_ups_to_csv(users, "data/ups.csv")
+            save_users_to_csv(users, "../data/users.csv")
+            save_ups_to_csv(users, "../data/ups.csv")
             raise e
 
-        save_users_to_csv(users, "data/users.csv")
-        save_ups_to_csv(ups, "data/ups.csv")
+        save_users_to_csv(users, "../data/users.csv")
+        save_ups_to_csv(ups, "../data/ups.csv")
 
     def process_page(self, users, ups, target_page_card_count) -> (list[User], list[Up]):
         card_divs = self._wait_find(self.card_div_path, find_all=True)

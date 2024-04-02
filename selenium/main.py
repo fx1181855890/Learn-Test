@@ -1,6 +1,6 @@
 from selenium import webdriver
 
-from bilibili import Bilibili
+from scrape.bilibili import Bilibili
 
 driver = webdriver.Chrome()
 
