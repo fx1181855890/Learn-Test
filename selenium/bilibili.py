@@ -68,12 +68,12 @@ class Bilibili(Scraper):
                 self._wait_find(self.next_button_path).click()
                 self._wait_for_staleness(reference_element)
         except Exception as e:
-            save_users_to_csv(users, "users.csv")
-            save_ups_to_csv(users, "ups.csv")
+            save_users_to_csv(users, "data/users.csv")
+            save_ups_to_csv(users, "data/ups.csv")
             raise e
 
-        save_users_to_csv(users, "users.csv")
-        save_ups_to_csv(ups, "ups.csv")
+        save_users_to_csv(users, "data/users.csv")
+        save_ups_to_csv(ups, "data/ups.csv")
 
     def process_page(self, users, ups, target_page_card_count) -> (list[User], list[Up]):
         card_divs = self._wait_find(self.card_div_path, find_all=True)
