@@ -119,7 +119,7 @@ class Bilibili(Scraper):
         try:
             up_url.click()
             self.driver.switch_to.window(self.driver.window_handles[-1])
-            up.up_desc = self._wait_find(self.up_desc_h4_path, timeout=5).text
+            up.up_desc = self._wait_find(self.up_desc_h4_path, timeout=10).text
             up.avatar_url = self._wait_find(self.avatar_img_path).get_attribute("src")
         except Exception as e:
             traceback.print_exc()
