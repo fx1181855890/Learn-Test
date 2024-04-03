@@ -24,7 +24,6 @@ class Baidu(Scraper):
         search_box.send_keys(Keys.RETURN)
 
         self._wait(self.driver).until(title_contains("pytest"))
-        assert True
 
     def settings(self):
         settings_link = self._wait_find(self.setting_span_path)
@@ -37,7 +36,3 @@ class Baidu(Scraper):
         save_setting.click()
 
         self._wait(self.driver).until(alert_is_present())
-        alert = self.driver.switch_to.alert
-        alert.accept()
-
-        assert True
