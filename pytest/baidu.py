@@ -15,15 +15,12 @@ class Baidu(Scraper):
         self.search_setting_a_path = "//span[contains(text(),'搜索设置')]"
         self.save_setting_a_path = "//a[contains(text(),'保存设置')]"
 
-    def reset_to_homepage(self):
-        self.driver.get(self.base_url)
-
-    def search(self):
+    def search(self, search_term: str):
         search_box = self._wait_find(self.search_input_path)
-        search_box.send_keys("pytest")
+        search_box.send_keys(search_term)
         search_box.send_keys(Keys.RETURN)
 
-        self._wait(self.driver).until(title_contains("pytest"))
+        self._wait(self.driver).until(title_contains(search_term))
 
     def settings(self):
         settings_link = self._wait_find(self.setting_span_path)

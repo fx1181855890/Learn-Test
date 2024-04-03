@@ -1,10 +1,20 @@
+import pytest
+
 from baidu import Baidu
 
 
-def test_baidu_search():
+@pytest.mark.parametrize(
+    "search_term, expected_title",
+    [
+        ("pytest", "pytest"),
+        ("selenium", "selenium"),
+        ("Python", "Python"),
+    ],
+)
+def test_baidu_search(search_term: str, expected_title: str) -> None:
     baidu = Baidu()
-    baidu.search()
-    assert "pytest" in baidu.driver.title
+    baidu.search(search_term)
+    assert expected_title in baidu.driver.title
 
 
 def test_baidu_settings():
