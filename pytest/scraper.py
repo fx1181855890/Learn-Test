@@ -1,4 +1,3 @@
-from selenium import webdriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.expected_conditions import *
@@ -7,8 +6,8 @@ from selenium.webdriver.remote.webelement import WebElement
 
 
 class Scraper:
-    def __init__(self, url: str):
-        self.driver = webdriver.Chrome()
+    def __init__(self, url: str, driver: WebDriver):
+        self.driver = driver
         self.driver.get(url)
 
     def _wait(

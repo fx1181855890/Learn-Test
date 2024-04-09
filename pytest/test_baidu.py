@@ -1,6 +1,15 @@
 import pytest
+from selenium import webdriver
+from selenium.webdriver.chrome.webdriver import WebDriver
 
 from baidu import Baidu
+
+
+@pytest.fixture(scope="session")
+def driver():
+    driver = webdriver.Chrome()
+    yield driver
+    driver.quit()
 
 
 @pytest.mark.parametrize(
@@ -11,14 +20,14 @@ from baidu import Baidu
         ("Python", "Python"),
     ],
 )
-def test_baidu_search(search_term: str, expected_title: str) -> None:
-    baidu = Baidu()
+def test_baidu_search(driver: WebDriver, search_term: str, expected_title: str) -> None:
+    baidu = Baidu(driver)
     baidu.search(search_term)
     assert expected_title in baidu.driver.title
 
 
-def test_baidu_settings():
-    baidu = Baidu()
+def test_baidu_settings(driver: WebDriver):
+    baidu = Baidu(driver)
     baidu.settings()
     alert = baidu.driver.switch_to.alert
     assert alert
