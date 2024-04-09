@@ -1,15 +1,7 @@
 import pytest
-from selenium import webdriver
 from selenium.webdriver.chrome.webdriver import WebDriver
 
 from baidu import Baidu
-
-
-@pytest.fixture(scope="session")
-def driver():
-    driver = webdriver.Chrome()
-    yield driver
-    driver.quit()
 
 
 @pytest.mark.parametrize(
