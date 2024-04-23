@@ -5,5 +5,6 @@ from discuz import Discuz
 webdriver = webdriver.Chrome()
 discuz = Discuz(webdriver)
 discuz.sign_in("admin", "admin")
+discuz.init_board()
 discuz.add_board()
 print()

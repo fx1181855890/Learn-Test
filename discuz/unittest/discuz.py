@@ -22,6 +22,9 @@ class Discuz(Scraper):
         submit_input = self._wait_find(self.submit_input_path)
         submit_input.click()
 
+    def init_board(self):
+        self.driver.switch_to.frame(0)
+
     def add_board(self):
         add_board_a = self._wait_find(self.add_board_a_path)
         add_board_a.click()
