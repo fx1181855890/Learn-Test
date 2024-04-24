@@ -26,6 +26,7 @@ class Discuz(Scraper):
     def add_board(self, board_names: list[str]):
         add_board_a_path = "//div[@class='lastboard']/a"
         add_board_input_path = "(//input[@name='newforum[1][]'])[last()]"
+        submit_input_path = "//input[@name='editsubmit']"
 
         add_board_a = self._wait_find(add_board_a_path)
 
@@ -35,3 +36,5 @@ class Discuz(Scraper):
             add_board_input.clear()
             add_board_input.send_keys(board_name)
 
+        submit_input = self._wait_find(submit_input_path)
+        submit_input.click()
