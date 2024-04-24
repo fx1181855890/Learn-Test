@@ -39,7 +39,7 @@ class Discuz(Scraper):
             add_board_a.click()
             new_forum_input = self._wait_find(new_forum_input_path)
             new_forum_input.clear()
-            new_forum_input.send_keys(board["forum"])
+            new_forum_input.send_keys(board.forum)
 
         submit_input = self._wait_find(submit_input_path)
         # submit_input.click()

@@ -1,7 +1,8 @@
-from typing import TypedDict
+from dataclasses import dataclass
 
 
-class Board(TypedDict):
+@dataclass
+class Board:
     order: int
     forum: str
     inherited: str

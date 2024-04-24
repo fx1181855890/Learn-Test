@@ -10,7 +10,8 @@ discuz.sign_in("admin", "admin")
 discuz.init_board()
 
 boards = []
-boards.append(Board(order=0, forum="new forum a", inherited="默认板块"))
+board = Board(order=0, forum="new forum a", inherited="默认板块")
+boards.append(board)
 
 discuz.add_boards(boards)
 
