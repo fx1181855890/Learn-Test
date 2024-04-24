@@ -35,4 +35,3 @@ class Discuz(Scraper):
             add_board_input.clear()
             add_board_input.send_keys(board_name)
 
-
