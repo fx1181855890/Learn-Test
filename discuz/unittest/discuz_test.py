@@ -12,7 +12,7 @@ user_page.sign_in(username="admin", password="admin")
 board_page.init_board()
 
 boards = []
-board = Board(order=1, forum="new forum a", inherited="默认板块")
+board = Board(order=1, forum="new forum a", inherited="默认版块")
 boards.append(board)
 
 board_page.add_boards(boards)
