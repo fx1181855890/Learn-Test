@@ -1,8 +1,8 @@
 from selenium import webdriver
 
-from unittest.page.board_page import BoardPage
-from unittest.page.user_page import UserPage
-from unittest.util import load_boards_from_json
+from discuz.page.board_page import BoardPage
+from discuz.page.user_page import UserPage
+from discuz.util import load_boards_from_json
 
 # Initialize WebDriver
 webdriver = webdriver.Chrome()

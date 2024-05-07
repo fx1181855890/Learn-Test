@@ -1,6 +1,6 @@
-from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.expected_conditions import *
+from selenium.webdriver.support.wait import WebDriverWait
 
 
 class Scraper:

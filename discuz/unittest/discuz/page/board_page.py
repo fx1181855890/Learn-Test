@@ -1,6 +1,7 @@
 from selenium.webdriver.remote.webdriver import WebDriver
-from unittest.scraper import Scraper
-from unittest.model.board import Board
+
+from discuz.model.board import Board
+from discuz.scraper import Scraper
 
 
 class BoardPage(Scraper):

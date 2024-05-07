@@ -1,6 +1,6 @@
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from unittest.scraper import Scraper
+from discuz.scraper import Scraper
 
 
 class UserPage(Scraper):
