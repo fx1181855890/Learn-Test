@@ -8,11 +8,11 @@ webdriver = webdriver.Chrome()
 user_page = UserPage(webdriver)
 board_page = BoardPage(webdriver)
 
-user_page.sign_in("admin", "admin")
+user_page.sign_in(username="admin", password="admin")
 board_page.init_board()
 
 boards = []
-board = Board(order=0, forum="new forum a", inherited="默认板块")
+board = Board(order=1, forum="new forum a", inherited="默认板块")
 boards.append(board)
 
 board_page.add_boards(boards)

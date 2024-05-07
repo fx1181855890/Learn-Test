@@ -25,7 +25,11 @@ class BoardPage(Scraper):
 
         for board in boards:
             add_board_a.click()
+            new_order_input = self._wait_find(new_order_input_path)
             new_forum_input = self._wait_find(new_forum_input_path)
+            new_inherited_select = self._wait_find(new_inherited_select_path)
+            new_order_input.clear()
+            new_order_input.send_keys(str(board.order))
             new_forum_input.clear()
             new_forum_input.send_keys(board.forum)
 
