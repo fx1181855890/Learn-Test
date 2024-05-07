@@ -1,18 +1,20 @@
 from selenium import webdriver
 
-from discuz import Discuz
-from board import Board
+from unittest.model.board import Board
+from unittest.page.board_page import BoardPage
+from unittest.page.user_page import UserPage
 
 webdriver = webdriver.Chrome()
-discuz = Discuz(webdriver)
+user_page = UserPage(webdriver)
+board_page = BoardPage(webdriver)
 
-discuz.sign_in("admin", "admin")
-discuz.init_board()
+user_page.sign_in("admin", "admin")
+board_page.init_board()
 
 boards = []
 board = Board(order=0, forum="new forum a", inherited="默认板块")
 boards.append(board)
 
-discuz.add_boards(boards)
+board_page.add_boards(boards)
 
 print()
