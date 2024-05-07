@@ -1,0 +1,8 @@
+version: "3.8"
+services:
+  discuzq:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    ports:
+      - "18002:80"
