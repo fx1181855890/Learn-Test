@@ -6,7 +6,7 @@ from unittest.scraper import Scraper
 class UserPage(Scraper):
     def __init__(self, driver: WebDriver):
         self.base_url = "http://localhost:8080/admin.php?action=forums"
-        super().__init__(self.base_url, driver)
+        super().__init__(driver, self.base_url)
 
     def sign_in(self, username: str, password: str):
         username_input_path = "//input[@name='admin_username']"

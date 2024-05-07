@@ -5,10 +5,11 @@ from unittest.page.board_page import BoardPage
 from unittest.page.user_page import UserPage
 
 webdriver = webdriver.Chrome()
-user_page = UserPage(webdriver)
-board_page = BoardPage(webdriver)
 
+user_page = UserPage(webdriver)
 user_page.sign_in(username="admin", password="admin")
+
+board_page = BoardPage(webdriver)
 board_page.init_board()
 
 boards = []

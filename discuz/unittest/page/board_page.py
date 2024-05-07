@@ -1,14 +1,11 @@
 from selenium.webdriver.remote.webdriver import WebDriver
-from selenium.webdriver.support.select import Select
-
 from unittest.scraper import Scraper
 from unittest.model.board import Board
 
 
 class BoardPage(Scraper):
     def __init__(self, driver: WebDriver):
-        self.base_url = "http://localhost:8080/admin.php?action=forums"
-        super().__init__(self.base_url, driver)
+        super().__init__(driver)
 
     def init_board(self):
         self.driver.switch_to.frame(0)
