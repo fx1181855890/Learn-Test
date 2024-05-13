@@ -3,5 +3,15 @@
         "order": 1,
         "forum": "new forum a",
         "inherited": "默认版块"
+    },
+    {
+        "order": 2,
+        "forum": "new forum b",
+        "inherited": "默认版块"
+    },
+    {
+        "order": 3,
+        "forum": "new forum c",
+        "inherited": "默认版块"
     }
 ]
