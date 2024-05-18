@@ -36,7 +36,7 @@ class BoardPage(Scraper):
             new_forum_input.send_keys(board.forum)
 
             new_inherited_select.click()
-            new_inherited_option_path = f"(//option[text()='{board.inherited}'])"
+            new_inherited_option_path = f".//option[contains(text(), '{board.inherited}')]"
             new_inherited_option = self._wait_find(new_inherited_option_path, new_inherited_select)
             new_inherited_option.click()
 
