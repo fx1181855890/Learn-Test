@@ -41,4 +41,18 @@ class BoardPage(Scraper):
             new_inherited_option.click()
 
         submit_input = self._wait_find(submit_input_path)
-        # submit_input.click()
+        submit_input.click()
+
+    def clean_up(self):
+        delete_links_path = "//a[text()='删除']"
+        confirm_button_path = "//input[@name='confirmed']"
+
+        while True:
+            delete_links = self._wait_find(delete_links_path, find_all=True, timeout=4)
+            if len(delete_links) <= 1:
+                break
+
+            delete_link = delete_links[-1]
+            delete_link.click()
+            confirm_button = self._wait_find(confirm_button_path)
+            confirm_button.click()

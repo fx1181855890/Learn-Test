@@ -21,4 +21,7 @@ loaded_boards = load_boards_from_json()
 # Add boards using the board page
 board_page.add_boards(loaded_boards)
 
+# Clear added boards
+board_page.clean_up()
+
 print("Boards have been added.")
