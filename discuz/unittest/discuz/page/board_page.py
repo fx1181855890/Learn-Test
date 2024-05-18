@@ -56,3 +56,16 @@ class BoardPage(Scraper):
             delete_link.click()
             confirm_button = self._wait_find(confirm_button_path)
             confirm_button.click()
+
+    def is_boards_added(self, boards: list[Board]) -> bool:
+        for board in boards:
+            order_input_path = f"//input[@value='{board.order}']"
+            forum_input_path = f"//input[@value='{board.forum}']"
+
+            try:
+                self._wait_find(order_input_path, timeout=4)
+                self._wait_find(forum_input_path, timeout=4)
+            except:
+                return False
+
+        return True
