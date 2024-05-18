@@ -12,7 +12,7 @@ class BoardPage(Scraper):
         self.driver.switch_to.frame(0)
 
     def add_boards(self, boards: list[Board]):
-        add_board_a_path = "//div[@class='lastboard']/a"
+        add_board_link_path = "//div[@class='lastboard']/a"
 
         new_order_input_path = "(//input[@name='neworder[1][]'])[last()]"
         new_forum_input_path = "(//input[@name='newforum[1][]'])[last()]"
@@ -20,7 +20,7 @@ class BoardPage(Scraper):
 
         submit_input_path = "//input[@name='editsubmit']"
 
-        add_board_a = self._wait_find(add_board_a_path)
+        add_board_a = self._wait_find(add_board_link_path)
 
         for board in boards:
             add_board_a.click()
