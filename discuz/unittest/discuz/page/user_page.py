@@ -19,3 +19,8 @@ class UserPage(Scraper):
         password_input.send_keys(password)
         submit_input = self._wait_find(submit_input_path)
         submit_input.click()
+
+    def is_signed_in(self) -> bool:
+        sign_out_link_path = "//a[text()='退出']"
+        sign_out_link = self._wait_find(sign_out_link_path, timeout=5)
+        return sign_out_link is not None

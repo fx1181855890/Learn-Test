@@ -10,6 +10,7 @@ webdriver = webdriver.Chrome()
 # Sign in
 user_page = UserPage(webdriver)
 user_page.sign_in(username="admin", password="admin")
+assert user_page.is_signed_in()
 
 # Initialize board page
 board_page = BoardPage(webdriver)
