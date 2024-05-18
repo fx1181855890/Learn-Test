@@ -8,8 +8,12 @@ class BoardPage(Scraper):
     def __init__(self, driver: WebDriver):
         super().__init__(driver)
 
-    def post_board(self, posts: list[Post]):
-        for post in posts:
-            enter_board_link_path = f"//a[text()='{post.board_name}']"
-            enter_board_link = self._wait_find(enter_board_link_path)
-            enter_board_link.click()
+    def post_board(self, post: Post):
+        subject_input_path = "//input[@name='subject']"
+        message_textarea_path = "//textarea[@name='message']"
+
+        subject_input = self._wait_find(subject_input_path)
+        message_input = self._wait_find(message_textarea_path)
+
+        subject_input.send_keys(post.subject)
+        message_input.send_keys(post.message)
