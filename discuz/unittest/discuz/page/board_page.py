@@ -49,7 +49,7 @@ class BoardPage(Scraper):
 
         while True:
             delete_links = self._wait_find(delete_links_path, find_all=True, timeout=4)
-            if len(delete_links) <= 1:
+            if len(delete_links) <= 2:
                 break
 
             delete_link = delete_links[-1]
