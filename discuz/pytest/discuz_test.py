@@ -2,8 +2,7 @@ from selenium import webdriver
 
 from discuz.page.board_page import BoardPage
 from discuz.page.main_page import MainPage
-from discuz.util import load_post__data_from_json
-
+from discuz.util import load_post_data, load_recommend_data
 
 driver = webdriver.Chrome()
 main_page = MainPage(driver)
@@ -14,11 +13,17 @@ main_page.sign_in(username="admin", password="admin")
 assert main_page.is_signed_in()
 
 # Load posts from JSON
-loaded_posts = load_post__data_from_json()
+loaded_posts = load_post_data()
+loaded_recommends = load_recommend_data()
 
 for loaded_post in loaded_posts:
     main_page.enter_board(loaded_post.board_name)
-    board_page.post_board(loaded_post)
+    board_page.submit_post(loaded_post)
+    main_page.init()
+
+for loaded_recommend in loaded_recommends:
+    main_page.enter_board(loaded_recommend.board_name)
+    board_page.recommend_post(loaded_recommend)
     main_page.init()
 
 driver.quit()
