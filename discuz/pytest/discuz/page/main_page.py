@@ -8,6 +8,9 @@ class MainPage(Scraper):
         self.base_url = "http://localhost:8080/index.php"
         super().__init__(driver, self.base_url)
 
+    def init(self):
+        self.driver.get(self.base_url)
+
     def sign_in(self, username: str, password: str):
         username_input_path = "//input[@name='username']"
         password_input_path = "//input[@name='password']"

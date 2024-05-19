@@ -19,5 +19,6 @@ loaded_posts = load_post__data_from_json()
 for loaded_post in loaded_posts:
     main_page.enter_board(loaded_post.board_name)
     board_page.post_board(loaded_post)
+    main_page.init()
 
 driver.quit()
