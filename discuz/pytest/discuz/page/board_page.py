@@ -2,6 +2,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 
 from discuz.model.comment import Comment
 from discuz.model.post import Post
+from discuz.model.recommend import Recommend
 from discuz.scraper import Scraper
 
 
@@ -41,8 +42,8 @@ class BoardPage(Scraper):
         confirm_span = self._wait_find(confirm_span_path)
         confirm_span.click()
 
-    def recommend_post(self, post: Post):
-        post_link_path = f"//a[text()='{post.subject}']"
+    def recommend_post(self, recommend: Recommend):
+        post_link_path = f"//a[text()='{recommend.subject}']"
         post_link = self._wait_find(post_link_path)
         post_link.click()
 
