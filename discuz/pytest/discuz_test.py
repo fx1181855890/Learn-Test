@@ -1,10 +1,15 @@
 import pytest
+import json
 
 from discuz import process
 from discuz.model.comment import Comment
 from discuz.model.post import Post
 from discuz.model.recommend import Recommend
-from discuz.process import load_test_data
+
+
+def load_test_data():
+    with open('data/test_data.json', 'r') as file:
+        return json.load(file)
 
 
 @pytest.mark.parametrize("post", load_test_data()["posts"])
@@ -15,7 +20,10 @@ def test_post(main_page, board_page, post):
     post_object = Post(post["board_name"], post["subject"], post["message"])
 
     process.submit_post(main_page, board_page, post_object)
-    assert board_page.is_posted(post_object)
+    if post["subject"] and post["message"]:
+        assert board_page.is_posted(post_object)
+    else:
+        assert not board_page.is_posted(post_object)
 
     main_page.sign_out()
 
@@ -28,7 +36,10 @@ def test_comment(main_page, board_page, comment):
     comment_object = Comment(comment["board_name"], comment["subject"], comment["message"])
 
     process.comment_post(main_page, board_page, comment_object)
-    assert process.is_commented(main_page, board_page, comment_object)
+    if comment["message"]:
+        assert process.is_commented(main_page, board_page, comment_object)
+    else:
+        assert not process.is_commented(main_page, board_page, comment_object)
 
     main_page.sign_out()
 

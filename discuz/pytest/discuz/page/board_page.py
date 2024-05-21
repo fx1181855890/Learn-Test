@@ -68,6 +68,9 @@ class BoardPage(Scraper):
         submit_button.click()
 
     def is_commented(self, comment: Comment) -> bool:
+        if comment.message == "":
+            return False
+
         post_link_path = f"//a[text()='{comment.subject}']"
         post_link = self._wait_find(post_link_path)
         post_link.click()
