@@ -42,5 +42,10 @@ class BoardPage(Scraper):
         post_link.click()
 
         message_textarea_path = "//textarea[@name='message']"
+        submit_button_path = "//button[@id='fastpostsubmit']"
+
         message_textarea = self._wait_find(message_textarea_path)
+        submit_button = self._wait_find(submit_button_path)
+
         message_textarea.send_keys(comment.message)
+        submit_button.click()
