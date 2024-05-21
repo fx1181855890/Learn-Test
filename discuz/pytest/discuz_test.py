@@ -1,15 +1,10 @@
 import pytest
-import json
 
 from discuz import process
 from discuz.model.comment import Comment
 from discuz.model.post import Post
 from discuz.model.recommend import Recommend
-
-
-def load_test_data():
-    with open('data/test_data.json', 'r') as file:
-        return json.load(file)
+from discuz.process import load_test_data
 
 
 @pytest.mark.parametrize("post", load_test_data()["posts"])
