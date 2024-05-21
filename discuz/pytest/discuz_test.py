@@ -1,5 +1,3 @@
-import time
-
 from selenium import webdriver
 
 from discuz.page.board_page import BoardPage
@@ -41,5 +39,19 @@ for loaded_comment in loaded_comments:
     main_page.init()
     main_page.enter_board(loaded_comment.board_name)
     board_page.comment_post(loaded_comment)
+
+# Sign in as admin
+main_page.sign_out()
+main_page.sign_in(username="admin", password="admin")
+assert main_page.is_signed_in()
+
+# Collect all unique board names from posts
+board_names = set(post.board_name for post in loaded_posts)
+
+# Clear posts from all boards
+for board_name in board_names:
+    main_page.init()
+    main_page.enter_board(board_name)
+    board_page.clear_posts()
 
 driver.quit()

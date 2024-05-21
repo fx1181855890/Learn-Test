@@ -27,6 +27,20 @@ class BoardPage(Scraper):
         except:
             pass
 
+    def clear_posts(self):
+        checkbox_input_path = "//input[@name='moderate[]']"
+        checkbox_inputs = self._wait_find(checkbox_input_path, find_all=True)
+        for checkbox in checkbox_inputs:
+            checkbox.click()
+
+        delete_link_path = "//a[text()='删除']"
+        delete_link = self._wait_find(delete_link_path)
+        delete_link.click()
+
+        confirm_span_path = "//span[text()='确定']"
+        confirm_span = self._wait_find(confirm_span_path)
+        confirm_span.click()
+
     def recommend_post(self, post: Post):
         post_link_path = f"//a[text()='{post.subject}']"
         post_link = self._wait_find(post_link_path)
