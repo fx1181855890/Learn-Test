@@ -21,6 +21,8 @@ class BoardPage(Scraper):
         message_input.send_keys(post.message)
         submit_button.click()
 
+        self._wait_for_staleness(submit_button)
+
     def recommend_post(self, post: Post):
         post_link_path = f"//a[text()='{post.subject}']"
         post_link = self._wait_find(post_link_path)
