@@ -1,48 +1,48 @@
-from selenium import webdriver
+import pytest
+import json
 
-from discuz import process, util
-from discuz.page.board_page import BoardPage
-from discuz.page.main_page import MainPage
+from discuz import process
+from discuz.model.comment import Comment
+from discuz.model.post import Post
+from discuz.model.recommend import Recommend
 
-driver = webdriver.Chrome()
-main_page = MainPage(driver)
-board_page = BoardPage(driver)
 
-# Sign in as admin
-main_page.sign_in(username="admin", password="admin")
-assert main_page.is_signed_in()
+def load_test_data():
+    with open('data/test_data.json', 'r') as file:
+        return json.load(file)
 
-# Load posts from JSON
-loaded_posts = util.load_post_data()
-loaded_recommends = util.load_recommend_data()
-loaded_comments = util.load_comment_data()
 
-# Submit posts
-process.submit_posts(main_page, board_page, loaded_posts)
+@pytest.mark.parametrize("post", load_test_data()["posts"])
+def test_post(main_page, board_page, post):
+    main_page.sign_in("admin", "admin")
+    assert main_page.is_signed_in()
 
-# Sign in as test user
-main_page.sign_out()
-main_page.sign_in(username="test", password="123456")
-assert main_page.is_signed_in()
+    post_object = Post(post["board_name"], post["subject"], post["message"])
 
-# Recommend posts
-process.recommend_posts(main_page, board_page, loaded_recommends)
+    process.submit_post(main_page, board_page, post_object)
 
-# Comment posts
-process.comment_posts(main_page, board_page, loaded_comments)
+    main_page.sign_out()
 
-# Sign in as admin
-main_page.sign_out()
-main_page.sign_in(username="admin", password="admin")
-assert main_page.is_signed_in()
 
-# Collect all unique board names from posts
-board_names = set(post.board_name for post in loaded_posts)
+@pytest.mark.parametrize("comment", load_test_data()["comments"])
+def test_comment(main_page, board_page, comment):
+    main_page.sign_in("test", "123456")
+    assert main_page.is_signed_in()
 
-# Clear posts from all boards
-for board_name in board_names:
-    main_page.init()
-    main_page.enter_board(board_name)
-    board_page.clear_posts()
+    comment_object = Comment(comment["board_name"], comment["subject"], comment["message"])
 
-driver.quit()
+    process.comment_post(main_page, board_page, comment_object)
+
+    main_page.sign_out()
+
+
+@pytest.mark.parametrize("recommend", load_test_data()["recommends"])
+def test_recommend(main_page, board_page, recommend):
+    main_page.sign_in("test", "123456")
+    assert main_page.is_signed_in()
+
+    recommend_object = Recommend(recommend["board_name"], recommend["subject"])
+
+    process.recommend_post(main_page, board_page, recommend_object)
+
+    main_page.sign_out()

@@ -1,0 +1,36 @@
+{
+  "posts": [
+    {
+      "board_name": "默认版块",
+      "subject": "new subject a",
+      "message": "new message a"
+    },
+    {
+      "board_name": "默认版块",
+      "subject": "new subject b",
+      "message": "new message b"
+    }
+  ],
+  "comments": [
+    {
+      "board_name": "默认版块",
+      "subject": "new subject a",
+      "message": "new comment a"
+    },
+    {
+      "board_name": "默认版块",
+      "subject": "new subject b",
+      "message": "new comment b"
+    }
+  ],
+  "recommends": [
+    {
+      "board_name": "默认版块",
+      "subject": "new subject a"
+    },
+    {
+      "board_name": "默认版块",
+      "subject": "new subject b"
+    }
+  ]
+}
