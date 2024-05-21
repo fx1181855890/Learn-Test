@@ -21,3 +21,9 @@ def comment_post(main_page: MainPage, board_page: BoardPage, comment: Comment):
     main_page.init()
     main_page.enter_board(comment.board_name)
     board_page.comment_post(comment)
+
+
+def is_commented(main_page: MainPage, board_page: BoardPage, comment: Comment) -> bool:
+    main_page.init()
+    main_page.enter_board(comment.board_name)
+    return board_page.is_commented(comment)

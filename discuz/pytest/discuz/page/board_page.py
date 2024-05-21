@@ -28,6 +28,14 @@ class BoardPage(Scraper):
         except:
             pass
 
+    def is_posted(self, post: Post) -> bool:
+        post_link_path = f"//a[text()='{post.subject}']"
+        try:
+            self._wait_find(post_link_path)
+            return True
+        except:
+            return False
+
     def clear_posts(self):
         checkbox_input_path = "//input[@name='moderate[]']"
         checkbox_inputs = self._wait_find(checkbox_input_path, find_all=True)
@@ -42,15 +50,6 @@ class BoardPage(Scraper):
         confirm_span = self._wait_find(confirm_span_path)
         confirm_span.click()
 
-    def recommend_post(self, recommend: Recommend):
-        post_link_path = f"//a[text()='{recommend.subject}']"
-        post_link = self._wait_find(post_link_path)
-        post_link.click()
-
-        recommend_link_path = "//a[@id='recommend_add']"
-        recommend_link = self._wait_find(recommend_link_path)
-        recommend_link.click()
-
     def comment_post(self, comment: Comment):
         post_link_path = f"//a[text()='{comment.subject}']"
         post_link = self._wait_find(post_link_path)
@@ -64,3 +63,25 @@ class BoardPage(Scraper):
 
         message_textarea.send_keys(comment.message)
         submit_button.click()
+
+    def is_commented(self, comment: Comment) -> bool:
+        post_link_path = f"//a[text()='{comment.subject}']"
+        post_link = self._wait_find(post_link_path)
+        post_link.click()
+
+        comment_td_path = f"//td[contains(text(), '{comment.message}')]"
+        try:
+            self._wait_find(comment_td_path)
+            return True
+        except:
+            return False
+
+    def recommend_post(self, recommend: Recommend):
+        post_link_path = f"//a[text()='{recommend.subject}']"
+        post_link = self._wait_find(post_link_path)
+        post_link.click()
+
+        recommend_link_path = "//a[@id='recommend_add']"
+        recommend_link = self._wait_find(recommend_link_path)
+        recommend_link.click()
+
