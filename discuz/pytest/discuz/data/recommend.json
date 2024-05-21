@@ -1,10 +1,10 @@
 [
-    {
-        "board_name": "默认版块",
-        "subject": "new subject a"
-    },
-    {
-        "board_name": "默认版块",
-        "subject": "new subject b"
-    }
+  {
+    "board_name": "默认版块",
+    "subject": "new subject a"
+  },
+  {
+    "board_name": "默认版块",
+    "subject": "new subject b"
+  }
 ]
