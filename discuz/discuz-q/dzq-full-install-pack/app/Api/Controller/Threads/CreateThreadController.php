@@ -91,7 +91,7 @@ class CreateThreadController extends DzqController
 
     public function main()
     {
-        $this->limitCreateThread();
+//        $this->limitCreateThread();
         !empty($position) && $this->dzqValidate($position, [
             'longitude' => 'required',
             'latitude' => 'required',
