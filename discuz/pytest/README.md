@@ -1,5 +1,13 @@
 # Allure
 
+## GitHub
+
+下载并添加到环境变量
+
+[https://github.com/allure-framework/allure2](https://github.com/allure-framework/allure2)
+
+## Python
+
 1. **安装 Allure**：
    ```sh
    pip install allure-pytest
