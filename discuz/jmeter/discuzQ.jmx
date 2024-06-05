@@ -1,0 +1,518 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.3">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="discuzQ">
+      <boolProp name="TestPlan.tearDown_on_shutdown">true</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+    </TestPlan>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="discuzQ">
+        <intProp name="ThreadGroup.num_threads">1</intProp>
+        <intProp name="ThreadGroup.ramp_time">1</intProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller">
+          <stringProp name="LoopController.loops">1</stringProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+        </elementProp>
+      </ThreadGroup>
+      <hashTree>
+        <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="username, password">
+          <collectionProp name="Arguments.arguments">
+            <elementProp name="username_1" elementType="Argument">
+              <stringProp name="Argument.name">username_1</stringProp>
+              <stringProp name="Argument.value">admin</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="password_1" elementType="Argument">
+              <stringProp name="Argument.name">password_1</stringProp>
+              <stringProp name="Argument.value">admin</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="username_2" elementType="Argument">
+              <stringProp name="Argument.name">username_2</stringProp>
+              <stringProp name="Argument.value">test11</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="password_2" elementType="Argument">
+              <stringProp name="Argument.name">password_2</stringProp>
+              <stringProp name="Argument.value">test11</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="username_3" elementType="Argument">
+              <stringProp name="Argument.name">username_3</stringProp>
+              <stringProp name="Argument.value">test22</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+            <elementProp name="password_3" elementType="Argument">
+              <stringProp name="Argument.name">password_3</stringProp>
+              <stringProp name="Argument.value">test22</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+          </collectionProp>
+        </Arguments>
+        <hashTree/>
+        <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller: user">
+          <stringProp name="LoopController.loops">3</stringProp>
+        </LoopController>
+        <hashTree>
+          <CounterConfig guiclass="CounterConfigGui" testclass="CounterConfig" testname="Counter">
+            <stringProp name="CounterConfig.start">1</stringProp>
+            <stringProp name="CounterConfig.end">3</stringProp>
+            <stringProp name="CounterConfig.incr">1</stringProp>
+            <stringProp name="CounterConfig.name">counter</stringProp>
+            <stringProp name="CounterConfig.format"></stringProp>
+            <boolProp name="CounterConfig.per_user">false</boolProp>
+          </CounterConfig>
+          <hashTree/>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="登录(登录)">
+            <stringProp name="HTTPSampler.domain">localhost</stringProp>
+            <stringProp name="HTTPSampler.port">18002</stringProp>
+            <stringProp name="HTTPSampler.protocol">http</stringProp>
+            <stringProp name="HTTPSampler.path">/api/v3/users/username.login</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">true</boolProp>
+            <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="username" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${__V(username_${counter})}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">username</stringProp>
+                </elementProp>
+                <elementProp name="password" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">${__V(password_${counter})}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                  <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                  <stringProp name="Argument.name">password</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+              <collectionProp name="HeaderManager.headers"/>
+            </HeaderManager>
+            <hashTree/>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor: token" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">token</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$.Data.accessToken</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+            <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+              <boolProp name="ResultCollector.error_logging">false</boolProp>
+              <objProp>
+                <name>saveConfig</name>
+                <value class="SampleSaveConfiguration">
+                  <time>true</time>
+                  <latency>true</latency>
+                  <timestamp>true</timestamp>
+                  <success>true</success>
+                  <label>true</label>
+                  <code>true</code>
+                  <message>true</message>
+                  <threadName>true</threadName>
+                  <dataType>true</dataType>
+                  <encoding>false</encoding>
+                  <assertions>true</assertions>
+                  <subresults>true</subresults>
+                  <responseData>false</responseData>
+                  <samplerData>false</samplerData>
+                  <xml>false</xml>
+                  <fieldNames>true</fieldNames>
+                  <responseHeaders>false</responseHeaders>
+                  <requestHeaders>false</requestHeaders>
+                  <responseDataOnError>false</responseDataOnError>
+                  <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+                  <assertionsResultsToSave>0</assertionsResultsToSave>
+                  <bytes>true</bytes>
+                  <sentBytes>true</sentBytes>
+                  <url>true</url>
+                  <threadCounts>true</threadCounts>
+                  <idleTime>true</idleTime>
+                  <connectTime>true</connectTime>
+                </value>
+              </objProp>
+              <stringProp name="filename"></stringProp>
+            </ResultCollector>
+            <hashTree/>
+          </hashTree>
+          <OnceOnlyController guiclass="OnceOnlyControllerGui" testclass="OnceOnlyController" testname="Once Only Controller" enabled="true"/>
+          <hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="上传附件(上传附件)" enabled="true">
+              <stringProp name="HTTPSampler.domain">localhost</stringProp>
+              <stringProp name="HTTPSampler.port">18002</stringProp>
+              <stringProp name="HTTPSampler.protocol">http</stringProp>
+              <stringProp name="HTTPSampler.path">/api/v3/attachments</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">true</boolProp>
+              <elementProp name="HTTPsampler.Files" elementType="HTTPFileArgs">
+                <collectionProp name="HTTPFileArgs.files">
+                  <elementProp name="C:\Users\windsnow1024\Pictures\Screenshots\Screenshot 2024-05-27 154707.png" elementType="HTTPFileArg">
+                    <stringProp name="File.mimetype">image/png</stringProp>
+                    <stringProp name="File.path">C:\Users\windsnow1024\Pictures\Screenshots\Screenshot 2024-05-27 154707.png</stringProp>
+                    <stringProp name="File.paramname">file</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+              <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="name" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">1.jpg</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    <stringProp name="Argument.name">name</stringProp>
+                  </elementProp>
+                  <elementProp name="type" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">4</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                    <boolProp name="HTTPArgument.use_equals">true</boolProp>
+                    <stringProp name="Argument.name">type</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Authorization</stringProp>
+                    <stringProp name="Header.value">${token}</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor: imageId" enabled="true">
+                <stringProp name="JSONPostProcessor.referenceNames">imageId</stringProp>
+                <stringProp name="JSONPostProcessor.jsonPathExprs">$.Data.id</stringProp>
+                <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              </JSONPostProcessor>
+              <hashTree/>
+              <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+                <boolProp name="ResultCollector.error_logging">false</boolProp>
+                <objProp>
+                  <name>saveConfig</name>
+                  <value class="SampleSaveConfiguration">
+                    <time>true</time>
+                    <latency>true</latency>
+                    <timestamp>true</timestamp>
+                    <success>true</success>
+                    <label>true</label>
+                    <code>true</code>
+                    <message>true</message>
+                    <threadName>true</threadName>
+                    <dataType>true</dataType>
+                    <encoding>false</encoding>
+                    <assertions>true</assertions>
+                    <subresults>true</subresults>
+                    <responseData>false</responseData>
+                    <samplerData>false</samplerData>
+                    <xml>false</xml>
+                    <fieldNames>true</fieldNames>
+                    <responseHeaders>false</responseHeaders>
+                    <requestHeaders>false</requestHeaders>
+                    <responseDataOnError>false</responseDataOnError>
+                    <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+                    <assertionsResultsToSave>0</assertionsResultsToSave>
+                    <bytes>true</bytes>
+                    <sentBytes>true</sentBytes>
+                    <url>true</url>
+                    <threadCounts>true</threadCounts>
+                    <idleTime>true</idleTime>
+                    <connectTime>true</connectTime>
+                  </value>
+                </objProp>
+                <stringProp name="filename"></stringProp>
+              </ResultCollector>
+              <hashTree/>
+            </hashTree>
+          </hashTree>
+          <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller: post" enabled="true">
+            <stringProp name="LoopController.loops">3</stringProp>
+          </LoopController>
+          <hashTree>
+            <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="title, text, content" enabled="true">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="title" elementType="Argument">
+                  <stringProp name="Argument.name">title</stringProp>
+                  <stringProp name="Argument.value">${__RandomString(10,abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,title)}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+                <elementProp name="text" elementType="Argument">
+                  <stringProp name="Argument.name">text</stringProp>
+                  <stringProp name="Argument.value">${__RandomString(25,abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,text)}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+                <elementProp name="content" elementType="Argument">
+                  <stringProp name="Argument.name">content</stringProp>
+                  <stringProp name="Argument.value">${__RandomString(20,abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,content)}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </Arguments>
+            <hashTree/>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="发帖(发帖)" enabled="true">
+              <stringProp name="HTTPSampler.domain">localhost</stringProp>
+              <stringProp name="HTTPSampler.port">18002</stringProp>
+              <stringProp name="HTTPSampler.protocol">http</stringProp>
+              <stringProp name="HTTPSampler.path">/api/v3/thread.create</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">{&#xd;
+    &quot;title&quot;: &quot;${title}&quot;,&#xd;
+    &quot;categoryId&quot;: 1,&#xd;
+    &quot;content&quot;: {&#xd;
+        &quot;text&quot;: &quot;${text}&quot;,&#xd;
+        &quot;indexes&quot;: {&#xd;
+            &quot;101&quot;: {&#xd;
+                &quot;tomId&quot;: 101,&#xd;
+                &quot;body&quot;: {&#xd;
+                    &quot;imageIds&quot;: [&#xd;
+                        ${imageId}&#xd;
+                    ],&#xd;
+                    &quot;priceList&quot;: []&#xd;
+                }&#xd;
+            }&#xd;
+        }&#xd;
+    },&#xd;
+    &quot;position&quot;: {},&#xd;
+    &quot;price&quot;: 0,&#xd;
+    &quot;freeWords&quot;: 0,&#xd;
+    &quot;attachmentPrice&quot;: 0,&#xd;
+    &quot;draft&quot;: 0,&#xd;
+    &quot;anonymous&quot;: 0&#xd;
+}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Authorization</stringProp>
+                    <stringProp name="Header.value">${token}</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Content-Type</stringProp>
+                    <stringProp name="Header.value">application/json</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+            </hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="查看帖子(查看帖子)" enabled="true">
+              <stringProp name="HTTPSampler.domain">localhost</stringProp>
+              <stringProp name="HTTPSampler.port">18002</stringProp>
+              <stringProp name="HTTPSampler.protocol">http</stringProp>
+              <stringProp name="HTTPSampler.path">/api/v3/thread.list</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <stringProp name="HTTPSampler.method">GET</stringProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+                <collectionProp name="Arguments.arguments"/>
+              </elementProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers"/>
+              </HeaderManager>
+              <hashTree/>
+              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor: threadId" enabled="true">
+                <stringProp name="JSONPostProcessor.referenceNames">threadId</stringProp>
+                <stringProp name="JSONPostProcessor.jsonPathExprs">$.Data.pageData[0].threadId</stringProp>
+                <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              </JSONPostProcessor>
+              <hashTree/>
+              <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor: postId" enabled="true">
+                <stringProp name="JSONPostProcessor.referenceNames">postId</stringProp>
+                <stringProp name="JSONPostProcessor.jsonPathExprs">$.Data.pageData[0].postId</stringProp>
+                <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              </JSONPostProcessor>
+              <hashTree/>
+            </hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="评论(评论)" enabled="true">
+              <stringProp name="HTTPSampler.domain">localhost</stringProp>
+              <stringProp name="HTTPSampler.port">18002</stringProp>
+              <stringProp name="HTTPSampler.protocol">http</stringProp>
+              <stringProp name="HTTPSampler.path">/api/v3/posts.create</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">{&#xd;
+    &quot;id&quot;: ${threadId},&#xd;
+    &quot;content&quot;: &quot;${content}&quot;,&#xd;
+    &quot;attachments&quot;: []&#xd;
+}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Authorization</stringProp>
+                    <stringProp name="Header.value">${token}</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Content-Type</stringProp>
+                    <stringProp name="Header.value">application/json</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+            </hashTree>
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="点赞(点赞)" enabled="true">
+              <stringProp name="HTTPSampler.domain">localhost</stringProp>
+              <stringProp name="HTTPSampler.port">18002</stringProp>
+              <stringProp name="HTTPSampler.protocol">http</stringProp>
+              <stringProp name="HTTPSampler.path">/api/v3/posts.update</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <stringProp name="HTTPSampler.method">POST</stringProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+                <collectionProp name="Arguments.arguments">
+                  <elementProp name="" elementType="HTTPArgument">
+                    <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                    <stringProp name="Argument.value">{&#xd;
+    &quot;postId&quot;: ${postId},&#xd;
+    &quot;id&quot;: ${threadId},&#xd;
+    &quot;data&quot;: {&#xd;
+        &quot;attributes&quot;: {&#xd;
+            &quot;isLiked&quot;: true&#xd;
+        }&#xd;
+    }&#xd;
+}</stringProp>
+                    <stringProp name="Argument.metadata">=</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </elementProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+                <collectionProp name="HeaderManager.headers">
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Authorization</stringProp>
+                    <stringProp name="Header.value">${token}</stringProp>
+                  </elementProp>
+                  <elementProp name="" elementType="Header">
+                    <stringProp name="Header.name">Content-Type</stringProp>
+                    <stringProp name="Header.value">application/json</stringProp>
+                  </elementProp>
+                </collectionProp>
+              </HeaderManager>
+              <hashTree/>
+            </hashTree>
+            <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+              <stringProp name="ConstantTimer.delay">300</stringProp>
+            </ConstantTimer>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+      </hashTree>
+      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="查看结果树">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="汇总报告">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename">C:\windsnow1024\Software\jmeter\test.jtl</stringProp>
+      </ResultCollector>
+      <hashTree/>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
